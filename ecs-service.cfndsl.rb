@@ -220,7 +220,7 @@ CloudFormation do
   task_placement_constraints = external_parameters.fetch(:task_placement_constraints, [])
   task_placement_constraints.each do |cntr|
     case cntr
-    when distinctInstance
+    when "distinctInstance"
       object = {Type: "distinctInstance"}
     else
       object = {Type: "memberOf"} 
