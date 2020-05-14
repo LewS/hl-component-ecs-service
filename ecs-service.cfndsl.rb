@@ -219,8 +219,13 @@ CloudFormation do
   task_constraints =[];
   task_placement_constraints = external_parameters.fetch(:task_placement_constraints, [])
   task_placement_constraints.each do |cntr|
-    object = {Type: "memberOf"} 
-    object.merge!({ Expression: FnSub(cntr)})
+    case cntr
+    when distinctInstance
+      object = {Type: "distinctInstance"}
+    else
+      object = {Type: "memberOf"} 
+      object.merge!({ Expression: FnSub(cntr)})
+    end
     task_constraints << object
   end
 
